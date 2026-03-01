@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HelpCircle, ChevronDown, MessageCircle, Mail, ExternalLink, BookOpen, Zap } from "lucide-react";
+import { HelpCircle, ChevronDown, MessageCircle, Mail, ExternalLink, BookOpen, Zap, Linkedin } from "lucide-react";
 import Link from "next/link";
 
 const faqs = [
@@ -154,6 +154,15 @@ export default function HelpPage() {
                     >
                         <Mail size={14} />
                         Email Support
+                    </a>
+                    <a
+                        href="https://www.linkedin.com/in/darshit-sheth-320388187/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-[#0A66C2] hover:bg-[#0A66C2]/80 text-white text-sm font-semibold transition-all shadow-lg shadow-[#0A66C2]/25"
+                    >
+                        <Linkedin size={14} />
+                        Connect on LinkedIn
                     </a>
                 </div>
             </motion.div>

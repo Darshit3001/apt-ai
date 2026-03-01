@@ -18,6 +18,7 @@ import {
     Plus,
     ChevronLeft,
     ChevronRight,
+    Linkedin,
 } from "lucide-react";
 
 const sidebarItems = [
@@ -35,6 +36,7 @@ const bottomItems = [
     { icon: Mail, label: "Newsletter", href: "/newsletter" },
     { icon: ShoppingBag, label: "Merch", href: "/merch" },
     { icon: HelpCircle, label: "Help", href: "/help" },
+    { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/darshit-sheth-320388187/", external: true },
 ];
 
 export function Sidebar() {
@@ -69,16 +71,16 @@ export function Sidebar() {
                             key={item.href}
                             href={item.href}
                             className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${isActive
-                                    ? "bg-[var(--color-primary)]/15 text-[var(--color-primary-light)] shadow-sm"
-                                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]"
+                                ? "bg-[var(--color-primary)]/15 text-[var(--color-primary-light)] shadow-sm"
+                                : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]"
                                 }`}
                             title={item.label}
                         >
                             <item.icon
                                 size={20}
                                 className={`shrink-0 transition-colors ${isActive
-                                        ? "text-[var(--color-primary-light)]"
-                                        : "text-[var(--text-tertiary)] group-hover:text-[var(--text-primary)]"
+                                    ? "text-[var(--color-primary-light)]"
+                                    : "text-[var(--text-tertiary)] group-hover:text-[var(--text-primary)]"
                                     }`}
                             />
                             {!sidebarCollapsed && <span>{item.label}</span>}
@@ -101,17 +103,35 @@ export function Sidebar() {
 
             {/* Bottom Items */}
             <div className="py-3 px-2 space-y-1 border-t border-[var(--border-default)]">
-                {bottomItems.map((item) => (
-                    <Link
-                        key={item.href}
-                        href={item.href}
-                        className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] hover:bg-[var(--bg-surface)] transition-all duration-200"
-                        title={item.label}
-                    >
-                        <item.icon size={18} className="shrink-0" />
-                        {!sidebarCollapsed && <span>{item.label}</span>}
-                    </Link>
-                ))}
+                {bottomItems.map((item) => {
+                    const linkClass = "flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] hover:bg-[var(--bg-surface)] transition-all duration-200";
+                    if (item.external) {
+                        return (
+                            <a
+                                key={item.href}
+                                href={item.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={linkClass}
+                                title={item.label}
+                            >
+                                <item.icon size={18} className="shrink-0" />
+                                {!sidebarCollapsed && <span>{item.label}</span>}
+                            </a>
+                        );
+                    }
+                    return (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            className={linkClass}
+                            title={item.label}
+                        >
+                            <item.icon size={18} className="shrink-0" />
+                            {!sidebarCollapsed && <span>{item.label}</span>}
+                        </Link>
+                    );
+                })}
 
                 {/* Collapse toggle */}
                 <button
