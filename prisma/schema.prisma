@@ -1,5 +1,5 @@
 // APT AI — Prisma Schema
-// SQLite for local dev, easily switchable to PostgreSQL for production
+// SQLite for local dev, Turso (LibSQL) for production
 
 generator client {
   provider = "prisma-client"
