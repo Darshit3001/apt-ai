@@ -7,7 +7,7 @@ import { useUIStore } from "@/stores/uiStore";
 import { tools as allTools, categories, getLatestTools, getTrendingTools } from "@/data/tools";
 import { ToolGrid } from "@/components/tools/ToolGrid";
 import { FeedTabs } from "@/components/tools/FeedTabs";
-import { Search, ArrowRight, Sparkles, BarChart3, Briefcase, Layers } from "lucide-react";
+import { Search, ArrowRight, Sparkles, BarChart3, Briefcase, Layers, Zap, Send } from "lucide-react";
 import Link from "next/link";
 
 // Stats data
@@ -19,6 +19,22 @@ const stats = [
 
 // Featured categories for quick nav
 const featuredCategories = categories.slice(0, 8);
+
+// Sparkle particle positions (randomized feel)
+const sparkles = [
+  { left: "10%", top: "20%", delay: 0, duration: 4 },
+  { left: "25%", top: "60%", delay: 1.2, duration: 5 },
+  { left: "40%", top: "15%", delay: 2.4, duration: 3.5 },
+  { left: "55%", top: "70%", delay: 0.8, duration: 4.5 },
+  { left: "70%", top: "25%", delay: 3.2, duration: 5.5 },
+  { left: "85%", top: "50%", delay: 1.8, duration: 4 },
+  { left: "15%", top: "80%", delay: 2.8, duration: 3 },
+  { left: "60%", top: "40%", delay: 0.4, duration: 5 },
+  { left: "90%", top: "15%", delay: 3.6, duration: 4.5 },
+  { left: "35%", top: "85%", delay: 1.5, duration: 3.5 },
+  { left: "78%", top: "75%", delay: 2.1, duration: 4.2 },
+  { left: "48%", top: "35%", delay: 3.8, duration: 5.2 },
+];
 
 export default function HomePage() {
   const { feedTab, freeMode } = useFilterStore();
@@ -37,84 +53,138 @@ export default function HomePage() {
 
   return (
     <div className="pb-24 lg:pb-8">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        {/* Background gradient blobs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -left-40 w-80 h-80 rounded-full bg-[var(--color-primary)]/10 blur-[100px] blob-animate" />
-          <div className="absolute -top-20 right-0 w-60 h-60 rounded-full bg-[var(--color-accent)]/8 blur-[80px] blob-animate" style={{ animationDelay: "2s" }} />
+      {/* ============================================================
+          LIQUID GLASS IMMERSIVE HERO
+          ============================================================ */}
+      <section className="relative overflow-hidden" style={{ minHeight: "clamp(420px, 60vh, 600px)" }}>
+        {/* Layer 0: Animated Mesh Gradient Background */}
+        <div className="liquid-mesh-bg" />
+
+        {/* Layer 0.5: Sparkle Particles */}
+        {sparkles.map((s, i) => (
+          <div
+            key={i}
+            className="sparkle"
+            style={{
+              left: s.left,
+              top: s.top,
+              animationDelay: `${s.delay}s`,
+              animationDuration: `${s.duration}s`,
+              width: i % 3 === 0 ? "4px" : i % 2 === 0 ? "2px" : "3px",
+              height: i % 3 === 0 ? "4px" : i % 2 === 0 ? "2px" : "3px",
+            }}
+          />
+        ))}
+
+        {/* Layer 1: Behind-text glow */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ zIndex: 1 }}>
+          <div
+            className="w-[600px] h-[350px] rounded-full blur-[130px] opacity-50"
+            style={{
+              background: "radial-gradient(ellipse, rgba(108, 92, 231, 0.6), rgba(0, 210, 255, 0.25), transparent)",
+            }}
+          />
         </div>
 
-        <div className="relative px-4 lg:px-8 pt-8 pb-6 lg:pt-12 lg:pb-8">
-          {/* Title */}
+        {/* Layer 2: Main Content */}
+        <div className="relative px-4 lg:px-8 pt-10 pb-8 lg:pt-16 lg:pb-10 flex flex-col items-center" style={{ zIndex: 2 }}>
+          {/* Massive Headline */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-8"
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-center mb-6"
           >
-            <h1 className="text-3xl lg:text-5xl font-bold mb-3 font-[var(--font-display)]">
-              <span className="text-gradient">APT AI</span>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold font-[var(--font-display)] tracking-tight leading-[1.1] mb-4">
+              <span className="text-gradient text-glow">APT AI</span>
             </h1>
-            <p className="text-base lg:text-lg text-[var(--text-secondary)] max-w-xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl lg:text-2xl text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed font-light">
               Discover the perfect AI tool for any task.
+              <br className="hidden sm:block" />
               <span className="text-[var(--text-primary)] font-medium"> Compare, review, and decide </span>
               with confidence.
             </p>
           </motion.div>
 
-          {/* Search Bar */}
+          {/* Glass Search Bar */}
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="max-w-xl mx-auto mb-8"
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full max-w-2xl mb-8"
           >
             <button
               onClick={() => setSearchOpen(true)}
-              className="w-full flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] hover:border-[var(--border-hover)] transition-all duration-300 group shadow-lg shadow-black/20"
+              className="liquid-search glass-shimmer glow-pulse-border w-full flex items-center gap-3 px-6 py-4 group cursor-pointer"
               id="hero-search"
             >
-              <Search size={18} className="text-[var(--text-muted)] group-hover:text-[var(--color-accent)] transition-colors" />
-              <span className="text-sm text-[var(--text-muted)] group-hover:text-[var(--text-tertiary)] transition-colors flex-1 text-left">
+              <Search size={20} className="text-[var(--text-muted)] group-hover:text-[var(--color-accent)] transition-colors duration-300" />
+              <span className="text-sm sm:text-base text-[var(--text-muted)] group-hover:text-[var(--text-tertiary)] transition-colors duration-300 flex-1 text-left">
                 Search 46,600+ AI tools...
               </span>
-              <kbd className="hidden sm:flex items-center gap-1 px-2 py-1 text-xs bg-[var(--bg-surface-plus)] rounded-lg text-[var(--text-muted)] border border-[var(--border-default)]">
+              <kbd className="hidden sm:flex items-center gap-1 px-2.5 py-1 text-xs bg-white/[0.04] rounded-lg text-[var(--text-muted)] border border-white/[0.06]">
                 Ctrl+K
               </kbd>
             </button>
           </motion.div>
 
-          {/* Stats */}
+          {/* Dual CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-3 mb-10"
+          >
+            <Link
+              href="/categories"
+              className="liquid-btn px-6 py-2.5 text-sm font-semibold text-white flex items-center gap-2"
+            >
+              <Zap size={15} />
+              Explore Tools
+            </Link>
+            <Link
+              href="/submit"
+              className="liquid-btn-ghost px-6 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center gap-2"
+            >
+              <Send size={14} />
+              Submit a Tool
+            </Link>
+          </motion.div>
+
+          {/* Floating Stats in Glass Pills */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex items-center justify-center gap-6 lg:gap-10 mb-8"
+            transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-3 sm:gap-4 mb-8"
           >
             {stats.map((stat, i) => (
-              <div key={stat.label} className="text-center">
-                <div className="flex items-center justify-center gap-1.5 mb-0.5">
-                  <stat.icon size={16} style={{ color: stat.color }} />
-                  <span className="text-xl lg:text-2xl font-bold text-[var(--text-primary)]">{stat.value}</span>
-                </div>
-                <span className="text-xs text-[var(--text-muted)]">{stat.label}</span>
-              </div>
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.6 + i * 0.1 }}
+                className="liquid-glass-thin px-4 py-2.5 flex items-center gap-2 rounded-2xl"
+              >
+                <stat.icon size={15} style={{ color: stat.color }} />
+                <span className="text-lg font-bold text-[var(--text-primary)]">{stat.value}</span>
+                <span className="text-xs text-[var(--text-muted)] hidden sm:inline">{stat.label}</span>
+              </motion.div>
             ))}
           </motion.div>
 
-          {/* Category Pills */}
+          {/* Category Pills in Glass */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap items-center justify-center gap-2 mb-2"
+            transition={{ duration: 0.5, delay: 0.65 }}
+            className="flex flex-wrap items-center justify-center gap-2"
           >
             {(showAllCategories ? categories : featuredCategories).map((cat) => (
               <Link
                 key={cat.id}
                 href={`/categories/${cat.slug}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[var(--bg-surface)] border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-hover)] hover:bg-[var(--bg-surface-plus)] transition-all duration-200"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-white/[0.03] border border-white/[0.06] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-white/[0.12] hover:bg-white/[0.06] backdrop-blur-sm transition-all duration-300"
               >
                 <span>{cat.icon}</span>
                 <span>{cat.name}</span>
@@ -124,7 +194,7 @@ export default function HomePage() {
             {!showAllCategories && (
               <button
                 onClick={() => setShowAllCategories(true)}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium text-[var(--color-accent)] hover:bg-[var(--color-accent)]/10 transition-all duration-200"
+                className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-medium text-[var(--color-accent)] hover:bg-[var(--color-accent)]/10 transition-all duration-200"
               >
                 Show all
                 <ArrowRight size={12} />
@@ -132,6 +202,15 @@ export default function HomePage() {
             )}
           </motion.div>
         </div>
+
+        {/* Bottom fade into feed */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
+          style={{
+            background: "linear-gradient(to bottom, transparent, var(--bg-primary))",
+            zIndex: 3,
+          }}
+        />
       </section>
 
       {/* Feed Section */}
