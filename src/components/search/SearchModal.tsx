@@ -67,7 +67,7 @@ export function SearchModal() {
                         name: `Web Result for "${query}"`,
                         description: `Automatically pulled from the global neural net due to local cache miss.`,
                         logo: '',
-                        websiteUrl: `https://duckduckgo.com/?q=${encodeURIComponent(query)}`,
+                        website: `https://duckduckgo.com/?q=${encodeURIComponent(query)}`,
                         categoryId: 'ai-search',
                         pricingModel: 'FREE',
                         priceFrom: null,
@@ -82,7 +82,7 @@ export function SearchModal() {
                         updatedAt: new Date().toISOString(),
                         features: [],
                         gallery: [],
-                        tags: ['external', 'web'],
+                        tags: [{ id: 'external', slug: 'external', name: 'External' }],
                         category: {
                             id: 'neural-net',
                             name: 'External Source',
@@ -192,21 +192,21 @@ export function SearchModal() {
                                                     variants={{ hidden: { opacity: 0, y: 10, scale: 0.98 }, show: { opacity: 1, y: 0, scale: 1 } }}
                                                 >
                                                     <Link
-                                                        href={tool.websiteUrl.startsWith('http') ? tool.websiteUrl : `/tool/${tool.slug}`}
-                                                        target={tool.websiteUrl.startsWith('http') ? "_blank" : "_self"}
-                                                        onClick={() => !tool.websiteUrl.startsWith('http') && setSearchOpen(false)}
+                                                        href={tool.website?.startsWith('http') ? tool.website : `/tool/${tool.slug}`}
+                                                        target={tool.website?.startsWith('http') ? "_blank" : "_self"}
+                                                        onClick={() => !tool.website?.startsWith('http') && setSearchOpen(false)}
                                                         className={`flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 group
-                                                        ${tool.tags?.includes('external')
+                                                        ${tool.tags?.some(t => t.slug === 'external')
                                                                 ? 'bg-[#00D4AA]/5 hover:bg-[#00D4AA]/10 border border-[#00D4AA]/20'
                                                                 : 'bg-white/5 hover:bg-white/10 border border-transparent'}`}
                                                     >
                                                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shadow-inner
-                                                            ${tool.tags?.includes('external') ? 'bg-[#00D4AA]/20 text-[#00D4AA]' : 'bg-black/50 text-[var(--color-primary)] border border-white/10'}`}>
-                                                            {tool.tags?.includes('external') ? <Globe size={18} /> : tool.name.charAt(0)}
+                                                            ${tool.tags?.some(t => t.slug === 'external') ? 'bg-[#00D4AA]/20 text-[#00D4AA]' : 'bg-black/50 text-[var(--color-primary)] border border-white/10'}`}>
+                                                            {tool.tags?.some(t => t.slug === 'external') ? <Globe size={18} /> : tool.name.charAt(0)}
                                                         </div>
                                                         <div className="flex-1 min-w-0">
                                                             <div className="flex items-center gap-2">
-                                                                <span className={`text-base font-semibold ${tool.tags?.includes('external') ? 'text-[#00D4AA]' : 'text-white'}`}>
+                                                                <span className={`text-base font-semibold ${tool.tags?.some(t => t.slug === 'external') ? 'text-[#00D4AA]' : 'text-white'}`}>
                                                                     {tool.name}
                                                                 </span>
                                                                 <span className="text-[10px] font-mono tracking-wider text-white/40 bg-black/50 border border-white/10 px-2 py-0.5 rounded-full">
@@ -218,7 +218,7 @@ export function SearchModal() {
                                                             </p>
                                                         </div>
                                                         <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/30 group-hover:bg-white group-hover:text-black transition-all transform group-hover:scale-110">
-                                                            <ArrowRight size={14} className={tool.tags?.includes('external') ? '-rotate-45' : ''} />
+                                                            <ArrowRight size={14} className={tool.tags?.some(t => t.slug === 'external') ? '-rotate-45' : ''} />
                                                         </div>
                                                     </Link>
                                                 </motion.div>

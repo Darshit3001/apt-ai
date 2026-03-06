@@ -183,7 +183,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
                         className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all pointer-events-auto z-20"
                         style={{ transform: "translateZ(40px)" }}
                     >
-                        <button onClick={(e) => { e.preventDefault(); window.open(tool.websiteUrl, '_blank'); }} className="w-8 h-8 rounded-full bg-black/50 border border-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-[var(--color-primary)] hover:border-[var(--color-primary)] transition-all hover:scale-110" aria-label="Open external site">
+                        <button onClick={(e) => { e.preventDefault(); window.open(tool.website, '_blank'); }} className="w-8 h-8 rounded-full bg-black/50 border border-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-[var(--color-primary)] hover:border-[var(--color-primary)] transition-all hover:scale-110" aria-label="Open external site">
                             <ExternalLink size={12} />
                         </button>
                     </motion.div>

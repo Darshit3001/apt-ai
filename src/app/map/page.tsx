@@ -66,17 +66,15 @@ function MagneticCard({
                     rotateX: prefersReducedMotion ? 0 : rotateX,
                     rotateY: prefersReducedMotion ? 0 : rotateY,
                     transformStyle: "preserve-3d",
-                }}
-                className={`group relative w-full text-left rounded-[20px] border p-5 cursor-pointer outline-none
-          focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-all duration-300
-          ${isSelected ? "scale-[1.02]" : "hover:scale-[1.01]"}`}
-                style={{
                     background: isSelected
                         ? `linear-gradient(135deg, ${color}20 0%, ${color}08 100%)`
                         : "rgba(255,255,255,0.025)",
                     borderColor: isSelected ? `${color}55` : "rgba(255,255,255,0.06)",
                     boxShadow: isSelected ? `0 0 24px ${color}25, 0 8px 32px rgba(0,0,0,0.4)` : undefined,
                 } as React.CSSProperties}
+                className={`group relative w-full text-left rounded-[20px] border p-5 cursor-pointer outline-none
+          focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-all duration-300
+          ${isSelected ? "scale-[1.02]" : "hover:scale-[1.01]"}`}
                 aria-label={`${cat.name}, ${cat.toolCount} tools`}
                 aria-pressed={isSelected}
             >
