@@ -36,7 +36,7 @@ const bottomItems = [
     { icon: Mail, label: "Newsletter", href: "/newsletter" },
     { icon: ShoppingBag, label: "Merch", href: "/merch" },
     { icon: HelpCircle, label: "Help", href: "/help" },
-    { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/darshit-sheth-320388187/", external: true },
+    { icon: Users, label: "Community", href: "/community", external: false },
 ];
 
 export function Sidebar() {

@@ -132,45 +132,102 @@ export default function MapPage() {
                 </div>
             </motion.div>
 
-            {/* Map canvas */}
-            <div className="flex-1 relative rounded-2xl bg-[var(--bg-surface)]/50 border border-[var(--border-default)] overflow-hidden">
-                {/* Background grid pattern */}
-                <div className="absolute inset-0 opacity-[0.03]" style={{
-                    backgroundImage: "radial-gradient(circle, var(--text-muted) 1px, transparent 1px)",
-                    backgroundSize: "30px 30px",
-                }} />
+            {/* Futuristic Map canvas */}
+            <div className="flex-1 relative rounded-2xl bg-black border border-[var(--color-primary)]/20 overflow-hidden shadow-[0_0_50px_rgba(124,92,252,0.1)_inset]">
+                {/* Advanced Holographic Grid */}
+                <div
+                    className="absolute inset-0 opacity-20 pointer-events-none"
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(to right, var(--color-primary) 1px, transparent 1px),
+                            linear-gradient(to bottom, var(--color-primary) 1px, transparent 1px)
+                        `,
+                        backgroundSize: "60px 60px",
+                        perspective: "1000px",
+                        transform: "rotateX(60deg) scale(2) translateY(-20%)",
+                        transformOrigin: "top text-center"
+                    }}
+                />
 
-                {/* Ambient glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[var(--color-primary)]/5 rounded-full blur-[100px] pointer-events-none" />
+                {/* Radar Sweep Effect */}
+                <div
+                    className="absolute inset-0 pointer-events-none opacity-30 mix-blend-screen"
+                    style={{
+                        background: "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 270deg, var(--color-accent) 360deg)",
+                        animation: "radar-spin 4s linear infinite",
+                        borderRadius: "50%"
+                    }}
+                />
 
-                {/* SVG Canvas */}
+                {/* Core Ambient Glow */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[var(--color-primary)]/10 rounded-full blur-[120px] pointer-events-none" />
+
+                <style dangerouslySetInnerHTML={{
+                    __html: `
+                    @keyframes radar-spin {
+                        from { transform: rotate(0deg) scale(2); }
+                        to { transform: rotate(360deg) scale(2); }
+                    }
+                    @keyframes pulse-ring {
+                        0% { transform: scale(0.8); opacity: 0.5; }
+                        50% { transform: scale(1.2); opacity: 0; }
+                        100% { transform: scale(0.8); opacity: 0; }
+                    }
+                    @keyframes blink {
+                        0%, 100% { opacity: 0.8; }
+                        50% { opacity: 0.3; }
+                    }
+                `}} />
+
+                {/* SVG Canvas for Cyber Nodes */}
                 <svg
                     viewBox="0 0 100 100"
-                    className="w-full h-full"
-                    style={{ transform: `scale(${zoom})`, transformOrigin: "center", transition: "transform 0.3s ease" }}
+                    className="w-full h-full relative z-10 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
+                    style={{ transform: `scale(${zoom})`, transformOrigin: "center", transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)" }}
                 >
-                    {/* Connection lines */}
+                    {/* Glowing neon background arcs */}
+                    <circle cx="50" cy="50" r="44" fill="none" stroke="var(--color-primary)" strokeWidth="0.1" strokeDasharray="1 3" opacity="0.4" />
+                    <circle cx="50" cy="50" r="32" fill="none" stroke="var(--color-accent)" strokeWidth="0.1" strokeDasharray="0.5 2" opacity="0.3" />
+                    <circle cx="50" cy="50" r="18" fill="none" stroke="var(--color-primary)" strokeWidth="0.1" opacity="0.2" />
+
+                    {/* Data stream connections */}
                     {connections.map((line, i) => (
-                        <line
-                            key={`line-${i}`}
-                            x1={line.x1}
-                            y1={line.y1}
-                            x2={line.x2}
-                            y2={line.y2}
-                            stroke="var(--color-primary)"
-                            strokeWidth="0.08"
-                            opacity={line.opacity}
-                        />
+                        <g key={`connection-${i}`}>
+                            <line
+                                x1={line.x1}
+                                y1={line.y1}
+                                x2={line.x2}
+                                y2={line.y2}
+                                stroke="var(--color-primary)"
+                                strokeWidth="0.05"
+                                opacity={line.opacity * 0.5}
+                            />
+                            {/* Animated data packet traveling on line if opacity is high enough */}
+                            {line.opacity > 0.1 && i % 3 === 0 && (
+                                <circle r="0.4" fill="var(--color-accent)">
+                                    <animateMotion
+                                        dur={`${3 + (i % 5)}s`}
+                                        repeatCount="indefinite"
+                                        path={`M ${line.x1} ${line.y1} L ${line.x2} ${line.y2}`}
+                                    />
+                                </circle>
+                            )}
+                        </g>
                     ))}
 
-                    {/* Category bubbles */}
+                    {/* Central Core System Label */}
+                    <text x="50" y="50" textAnchor="middle" dominantBaseline="central" fontSize="2" fill="rgba(255,255,255,0.1)" className="font-mono tracking-widest pointer-events-none">
+                        SYSTEM CORE
+                    </text>
+
+                    {/* Category AI Nodes */}
                     {categories.map((cat, i) => {
                         if (i >= positions.length) return null;
                         const pos = positions[i];
                         const color = bubbleColors[i % bubbleColors.length];
                         const isHovered = hoveredCategory === cat.id;
                         const isSelected = selectedCategory === cat.id;
-                        const scale = isHovered || isSelected ? 1.2 : 1;
+                        const scale = isHovered || isSelected ? 1.3 : 1;
                         const toolCount = cat.toolCount;
                         const sizeMultiplier = Math.max(0.6, Math.min(1.4, toolCount / 150));
                         const radius = (pos.size / 2) * sizeMultiplier;
@@ -182,65 +239,101 @@ export default function MapPage() {
                                 onClick={() => setSelectedCategory(isSelected ? null : cat.id)}
                                 onMouseEnter={() => setHoveredCategory(cat.id)}
                                 onMouseLeave={() => setHoveredCategory(null)}
-                                style={{ transition: "transform 0.2s ease" }}
+                                style={{ transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)" }}
                             >
-                                {/* Outer glow */}
+                                {/* Holographic Aura */}
                                 <circle
                                     cx={pos.x}
                                     cy={pos.y}
-                                    r={radius + 1}
-                                    fill={color}
-                                    opacity={isHovered || isSelected ? 0.15 : 0.05}
-                                    style={{ transition: "opacity 0.2s ease" }}
+                                    r={radius * scale * 1.5}
+                                    fill={`url(#glow-${cat.id})`}
+                                    opacity={isHovered || isSelected ? 0.8 : 0}
+                                    style={{ transition: "opacity 0.3s ease" }}
                                 />
-                                {/* Main bubble */}
+                                <defs>
+                                    <radialGradient id={`glow-${cat.id}`}>
+                                        <stop offset="0%" stopColor={color} stopOpacity="0.4" />
+                                        <stop offset="100%" stopColor={color} stopOpacity="0" />
+                                    </radialGradient>
+                                </defs>
+
+                                {/* Pulsing rings for priority nodes */}
+                                {toolCount > 50 && !isSelected && (
+                                    <circle cx={pos.x} cy={pos.y} r={radius} fill="none" stroke={color} strokeWidth="0.2">
+                                        <animate attributeName="r" values={`${radius};${radius * 1.8}`} dur="3s" repeatCount="indefinite" />
+                                        <animate attributeName="opacity" values="0.8;0" dur="3s" repeatCount="indefinite" />
+                                    </circle>
+                                )}
+
+                                {/* Solid Node Base */}
                                 <circle
                                     cx={pos.x}
                                     cy={pos.y}
                                     r={radius * scale}
-                                    fill={`${color}22`}
+                                    fill="#000"
                                     stroke={color}
-                                    strokeWidth={isSelected ? 0.3 : 0.15}
-                                    opacity={isHovered || isSelected ? 1 : 0.7}
-                                    style={{ transition: "all 0.2s ease" }}
+                                    strokeWidth={isSelected ? 0.4 : 0.2}
                                 />
-                                {/* Icon */}
+
+                                {/* Inner Energy Core */}
+                                <circle
+                                    cx={pos.x}
+                                    cy={pos.y}
+                                    r={(radius * scale) * 0.8}
+                                    fill={color}
+                                    opacity={isHovered || isSelected ? 0.3 : 0.15}
+                                    style={{ animation: "blink 4s infinite alternate" }}
+                                />
+
+                                {/* Icon Display */}
                                 <text
                                     x={pos.x}
-                                    y={pos.y - 0.5}
+                                    y={pos.y}
                                     textAnchor="middle"
                                     dominantBaseline="central"
-                                    fontSize={radius * 0.7}
-                                    className="select-none pointer-events-none"
+                                    fontSize={radius * 0.8 * scale}
+                                    className="select-none pointer-events-none filter drop-shadow-[0_0_2px_rgba(255,255,255,0.5)]"
                                 >
                                     {cat.icon}
                                 </text>
-                                {/* Label */}
-                                <text
-                                    x={pos.x}
-                                    y={pos.y + radius + 1.8}
-                                    textAnchor="middle"
-                                    fontSize="1.5"
-                                    fill="var(--text-secondary)"
-                                    opacity={isHovered || isSelected ? 1 : 0.6}
-                                    className="select-none pointer-events-none"
-                                    style={{ transition: "opacity 0.2s ease" }}
-                                >
-                                    {cat.name}
-                                </text>
-                                {/* Count badge */}
-                                <text
-                                    x={pos.x}
-                                    y={pos.y + radius + 3.3}
-                                    textAnchor="middle"
-                                    fontSize="1.1"
-                                    fill="var(--text-muted)"
-                                    opacity={isHovered || isSelected ? 0.8 : 0}
-                                    className="select-none pointer-events-none"
-                                    style={{ transition: "opacity 0.2s ease" }}
-                                >
-                                    {toolCount} tools
-                                </text>
+
+                                {/* Cyber Data Label */}
+                                <g style={{ opacity: isHovered || isSelected ? 1 : 0.5, transition: "opacity 0.3s ease" }}>
+                                    {/* Text background plate */}
+                                    <rect
+                                        x={pos.x - (cat.name.length * 0.5)}
+                                        y={pos.y + radius * scale + 0.8}
+                                        width={cat.name.length * 1}
+                                        height="1.5"
+                                        fill="rgba(0,0,0,0.7)"
+                                        rx="0.2"
+                                        className="pointer-events-none"
+                                    />
+                                    <text
+                                        x={pos.x}
+                                        y={pos.y + radius * scale + 1.8}
+                                        textAnchor="middle"
+                                        fontSize="0.8"
+                                        fill="white"
+                                        className="select-none pointer-events-none font-mono tracking-wide"
+                                    >
+                                        {cat.name.toUpperCase()}
+                                    </text>
+
+                                    {/* Sub-data node (Tool count) */}
+                                    {(isHovered || isSelected) && (
+                                        <text
+                                            x={pos.x}
+                                            y={pos.y + radius * scale + 3}
+                                            textAnchor="middle"
+                                            fontSize="0.6"
+                                            fill="var(--color-primary-light)"
+                                            className="select-none pointer-events-none font-mono"
+                                        >
+                                            [ {toolCount} PROTOCOLS ]
+                                        </text>
+                                    )}
+                                </g>
                             </g>
                         );
                     })}

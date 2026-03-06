@@ -7,7 +7,7 @@ import { useUIStore } from "@/stores/uiStore";
 import { tools as allTools, categories, getLatestTools, getTrendingTools } from "@/data/tools";
 import { ToolGrid } from "@/components/tools/ToolGrid";
 import { FeedTabs } from "@/components/tools/FeedTabs";
-import { Search, ArrowRight, Sparkles, BarChart3, Briefcase, Layers, Zap, Send } from "lucide-react";
+import { Search, ArrowRight, Sparkles, BarChart3, Briefcase, Layers, Zap, Send, Map as MapIcon } from "lucide-react";
 import Link from "next/link";
 
 // Stats data
@@ -211,6 +211,59 @@ export default function HomePage() {
             zIndex: 3,
           }}
         />
+      </section>
+
+      {/* ============================================================
+          FUTURISTIC MAP PREVIEW SECTION
+          ============================================================ */}
+      <section className="px-4 lg:px-8 mb-16 relative z-10">
+        <div className="relative overflow-hidden rounded-[32px] border border-[var(--color-primary)]/20 shadow-[0_0_50px_rgba(124,92,252,0.1)_inset] bg-[#050510] group">
+          {/* Holographic BG */}
+          <div className="absolute inset-0 opacity-20 pointer-events-none"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, var(--color-primary) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--color-primary) 1px, transparent 1px)
+              `,
+              backgroundSize: "40px 40px",
+              perspective: "1000px",
+              transform: "rotateX(60deg) scale(2) translateY(-20%)",
+              transformOrigin: "top text-center"
+            }}
+          />
+          {/* Radar */}
+          <div className="absolute inset-0 pointer-events-none opacity-20 mix-blend-screen"
+            style={{
+              background: "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 270deg, var(--color-accent) 360deg)",
+              animation: "radar-spin 6s linear infinite",
+              borderRadius: "50%"
+            }}
+          />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] aspect-square rounded-full border border-[var(--color-primary)]/10" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] aspect-square rounded-full border border-[var(--color-accent)]/10" />
+
+          {/* Content */}
+          <div className="relative z-10 px-8 py-16 md:px-16 md:py-24 flex flex-col items-center justify-center text-center">
+            <div className="w-16 h-16 rounded-2xl bg-black/60 border border-[var(--color-primary)]/30 backdrop-blur-xl flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(124,92,252,0.3)]">
+              <MapIcon size={32} className="text-[var(--color-primary-light)]" />
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold font-[var(--font-display)] tracking-tight mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+              Explore the <span className="text-[var(--color-primary-light)]">Neural Map</span>
+            </h2>
+            <p className="text-[var(--text-secondary)] text-lg md:text-xl max-w-xl mx-auto mb-8 font-light">
+              Dive into our interactive 3D ecosystem. Navigate through interconnected AI models, protocols, and thousands of intelligent tools.
+            </p>
+            <Link
+              href="/map"
+              className="group/btn relative overflow-hidden px-8 py-4 rounded-xl font-bold text-white bg-black border border-[var(--color-primary)]/50 transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(124,92,252,0.4)]"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] opacity-20 group-hover/btn:opacity-50 transition-opacity" />
+              <span className="relative z-10 flex items-center gap-2">
+                Initialize Hologram <ArrowRight size={18} />
+              </span>
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* Feed Section */}
