@@ -1,63 +1,88 @@
-# 🚀 Project Summary: Match My Needs With AI Tool
+# MatchMyAI Tool
 
-Welcome to the architectural breakdown of **Match My Needs With AI Tool** (formerly known as APT AI). This document serves as a comprehensive overview of what the platform is, how it was built, its core features, and its underlying technology stack.
+> Discover the perfect AI tool for any task. Compare, review, and decide with confidence.
 
----
-
-## 1. The Core Concept
-**Match My Needs With AI Tool** is a premium, highly interactive AI tool directory and discovery engine. Instead of a standard, boring list of links, it is designed as a "soft future" application. It helps users navigate the rapidly expanding world of Artificial Intelligence by allowing them to search, filter, compare, and save AI tools based on their specific needs, pricing preferences, and use cases.
-
-## 2. Technology Stack
-The platform is built using a state-of-the-art modern web stack, designed for maximum performance, SEO superiority, and edge scalability.
-
-*   **Framework:** Next.js 14 (App Router)
-*   **Language:** TypeScript
-*   **Styling:** Tailwind CSS (Custom "Liquid Glass" design system)
-*   **Database:** LibSQL / Turso (SQLite on the Edge)
-*   **ORM:** Prisma (with `@prisma/adapter-libsql`)
-*   **Authentication:** NextAuth.js (Custom Credentials + JWT)
-*   **State Management:** Zustand (for UI states like sidebar, filters, and search modal)
-*   **Animations:** Framer Motion (Liquid transitions, glowing effects)
-*   **Icons:** Lucide React
-*   **PWA:** Next-PWA (Installable on mobile/desktop)
-*   **Hosting:** Vercel
+MatchMyAI Tool is a community-driven AI tool directory and discovery platform. I built this because finding the right AI tool for a specific job is genuinely painful — there are hundreds of options and most directories are just SEO link farms. This one is different.
 
 ---
 
-## 3. Key Features & Capabilities
+## What it does
 
-### 🔍 1. Universal AI Discovery Engine
-We built two highly advanced search paradigms into the platform:
-*   **Infinite Web Discovery:** If a user searches for an AI tool that isn't in our local database, the system quietly reaches out to the DuckDuckGo Instant Answer JSON API in the background. It intercepts real-time internet data, formats it into our custom "Tool Card" HTML layout, and seamlessly injects it into the grid. Users experience a feeling of an "infinite database."
-*   **Open Source Search (GitHub):** The platform features a dedicated tab to search for open-source AI repositories directly via the official GitHub REST API. We render live star counts, developer avatars, and project descriptions inside beautiful "Glassmorphism" cards.
-
-### 🌌 2. Interactive "Neural Map" Ecosystem
-Instead of just a grid list of categories, we built a sprawling, interactive, sci-fi cyber-map (`/map`). 
-*   It visualizes hundreds of AI categories as floating nodes.
-*   Nodes are connected by animated data packets and pulsing radar scans.
-*   Clicking a category node opens a detailed sidebar panel showcasing the top tools within that specific sector.
-*   A "Holographic Preview" widget for this map lives directly on the homepage to drive user engagement.
-
-### 🎨 3. "Premium Liquid Glass" UI Design
-The entire application was handcrafted to feel expensive, fast, and futuristic:
-*   Soft, deep cosmic dark mode (`#050510` background).
-*   Glassmorphism navbars and sidebars that blur the content scrolling beneath them (`backdrop-blur`).
-*   Vibrant, animated mesh gradients and sweeping laser lights.
-*   Micro-animations attached to every button click, hover, and page route using Framer Motion. 
-
-### 🔐 4. User Accounts & The Core Loop
-*   Users can register, log in, and manage their sessions securely with NextAuth.
-*   **Karma System:** Built-in gamification where actions might reward users with 'karma'.
-*   **Personalization:** Users can "Save/Bookmark" tools, leave reviews, and build personal tool collections.
-*   **Admin Dashboard:** Role-based access control exists allowing 'Admin' users to manage inventory securely.
+- **Browse & filter** 46,600+ AI tools by category, pricing, rating, and release date
+- **Timeline view** — filter the feed by year so you can see what launched when
+- **Collections** — curated lists of tools for specific use-cases (best free tools, best for writing, etc.)
+- **Community reviews** — real ratings and comments from users
+- **Neural Map** — an interactive visual map of the entire AI ecosystem by category
+- **Save tools** — bookmark your favourites and build personal collections
+- **Submit a tool** — anyone can submit a new tool for review
 
 ---
 
-## 4. The Genesis & Journey
+## Tech stack
 
-This platform underwent a massive evolution during development:
-1.  **Phase I:** It began as a concept named "APT AI." We established the core foundation—setting up Next.js, migrating from standard SQLite to an Edge-deployed Turso database, and seeding thousands of mocked AI tools into the directory.
-2.  **Phase II:** We integrated advanced APIs to ensure the database would literally never be empty. We tied in the DuckDuckGo and GitHub engines so the platform could serve answers globally without requiring expensive API subscriptions. 
-3.  **Phase III (The Rebrand):** We completely overhauled the brand identity to its current form: **Match My Needs With AI Tool**. A custom SEO-friendly logo (The Glowing Node "M") was generated and implemented everywhere, solidifying its place as a premium software product.
+| Layer | Tech |
+|---|---|
+| Framework | Next.js (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 |
+| Database | Turso (LibSQL on the edge) |
+| ORM | Prisma |
+| Auth | NextAuth.js |
+| State | Zustand |
+| Animations | Framer Motion |
+| Hosting | Vercel |
 
--- *Compiled and managed by your AI Agent Assistant.* 🚀
+---
+
+## Getting started locally
+
+```bash
+# Clone the repo
+git clone https://github.com/Darshit3001/MatchMyAI-Tool.git
+cd MatchMyAI-Tool
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Fill in your Turso DB URL + auth token, NextAuth secret, etc.
+
+# Run the dev server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to see it.
+
+---
+
+## Environment variables
+
+```
+TURSO_DATABASE_URL=
+TURSO_AUTH_TOKEN=
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=
+```
+
+---
+
+## Roadmap
+
+- [ ] AI-powered tool recommendations based on your use-case description
+- [ ] Browser extension for quick tool lookup
+- [ ] Comparison table (side-by-side tool specs)
+- [ ] Weekly "What's new in AI" digest email
+- [ ] Mobile app
+
+---
+
+## Contributing
+
+PRs and issues are welcome. If you know of a tool that's missing, use the Submit Tool button on the site or open a GitHub issue.
+
+---
+
+## License
+
+MIT
